@@ -1,0 +1,43 @@
+#include <iostream>
+
+template<typename T>
+SinglyLinkedListNode<T>::SinglyLinkedListNode(const T& value) : data(value), next(nullptr) {}
+
+template<typename T>
+DoublyLinkedListNode<T>::DoublyLinkedListNode(const T& value) : SinglyLinkedListNode<T>(value), prev(nullptr) {}
+
+template<typename T>
+DoublyLinkedList<T>::DoublyLinkedList() : head(nullptr), tail(nullptr) {}
+
+template<typename T>
+void DoublyLinkedList<T>::append(const T& data) {
+    DoublyLinkedListNode<T>* new_node = new DoublyLinkedListNode<T>(data);
+    if (!head) {
+        head = new_node;
+        tail = new_node;
+    } else {
+        new_node->prev = tail;
+        tail->next = new_node;
+        tail = new_node;
+    }
+}
+
+template<typename T>
+void DoublyLinkedList<T>::printForward() const {
+    DoublyLinkedListNode<T>* current = head;
+    while (current) {
+        std::cout << current->data << " ";
+        current = static_cast<DoublyLinkedListNode<T>*>(current->next);
+    }
+    std::cout << std::endl;
+}
+
+template<typename T>
+void DoublyLinkedList<T>::printBackward() const {
+    DoublyLinkedListNode<T>* current = tail;
+    while (current) {
+        std::cout << current->data << " ";
+        current = current->prev;
+    }
+    std::cout << std::endl;
+}
